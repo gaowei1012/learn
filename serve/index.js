@@ -4,6 +4,7 @@ const MysqlStore = require('koa-mysql-session');
 // const bodyParser = require('koa-bodyparser')
 const koaBody = require('koa-body'); // 支持上传多个文件
 const logger = require('koa-logger');
+const cors = require('koa2-cors')
 
 const app = new Koa();
 const {database, port, host} = require('./src/config');
@@ -22,11 +23,14 @@ app.use(
     })
 );
 
+
 // 为了能拿到 form data 中的数据， 使用 koa-body 代替 koa-bodyparser
 // app.use(bodyParser())
 app.use(koaBody());
 
 app.use(logger());
+
+app.use(cors())
 
 app.use(require('./src/route/learn').routes())
 
