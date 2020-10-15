@@ -1,26 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Tabs } from 'antd-mobile'
+import { StickyContainer, Sticky } from 'react-sticky';
+import Today from './Taday'
+import Hostory from './learnHistory'
+import './app.less'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const tabs = [
+  {title: '今日计划'},
+  {title: '历史单词'}
+]
+
+function renderTabBar(props) {
+  return (<Sticky>
+    {({ style }) => <div style={{ ...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
+  </Sticky>);
+}
+
+class App extends React.Component {
+  render() {
+    return (
+      <div className="app_container">
+        <StickyContainer>
+          <Tabs 
+            tabs={tabs}
+            initialPage={'t1'}
+            renderTabBar={renderTabBar}
+          >
+            <Today/> 
+            <Hostory/>
+          </Tabs>
+        </StickyContainer>
+      </div>
+    );
+  }
 }
 
 export default App;
